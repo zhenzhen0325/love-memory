@@ -665,7 +665,7 @@ body::after {
       name: '初识',
       items: [
         { type: 'image', path: '1初识/第一次认识你是在手机里，看到这张照片，觉得你会不会很油腻.jpg', desc: '第一次认识你是在手机里，看到这张照片，觉得你会不会很油腻' },
-        { type: 'image', path: '1初识/疫情期间被隔离，你就天天%22骚扰%22我，陪我聊天.png', desc: '疫情期间被隔离，你就天天"骚扰"我，陪我聊天' },
+        { type: 'image', path: '1初识/疫情期间被隔离，你就天天%22骚扰%22我，陪我聊天.jpg', desc: '疫情期间被隔离，你就天天"骚扰"我，陪我聊天' },
         { type: 'image', path: '1初识/我们第一次见面的地方.jpg', desc: '我们第一次见面的地方' },
         { type: 'image', path: '1初识/第一次见面你给我买的衣服.jpg', desc: '第一次见面你给我买的衣服' }
       ]
@@ -748,7 +748,7 @@ body::after {
       name: '帅照',
       items: [
         { type: 'image', path: '9帅照/这是我觉得你最帅的时候.jpg', desc: '这是我觉得你最帅的时候' },
-        { type: 'image', path: '9帅照/心里的你.png', desc: '心里的你' }
+        { type: 'image', path: '9帅照/心里的你.jpg', desc: '心里的你' }
       ]
     }
   ];
@@ -860,12 +860,21 @@ body::after {
         photoFrame.appendChild(video);
       } else {
         var img = document.createElement('img');
-        img.src = item.path;
         img.alt = item.desc;
+        img.style.opacity = '0';
+        img.style.transition = 'opacity 0.5s ease';
+        img.onload = function() {
+          img.style.opacity = '1';
+        };
         img.onerror = function() {
           img.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect fill="#fce4ec" width="400" height="300"/><text x="200" y="150" text-anchor="middle" fill="#c94b64" font-size="18" font-family="sans-serif">照片加载中...</text></svg>');
+          img.style.opacity = '1';
         };
         photoFrame.appendChild(img);
+        // 延迟设置src以触发加载动画
+        requestAnimationFrame(function() {
+          img.src = item.path;
+        });
       }
 
       photoDesc.textContent = item.desc;
