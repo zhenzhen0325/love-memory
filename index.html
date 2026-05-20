@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>珍珍爱上了阿翔</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&family=Liu+Jian+Mao+Cao&display=swap');
+
+:root {
+  --pink-light: #fce4ec;
+  --pink-mid: #f8bbd0;
+  --pink-deep: #f48fb1;
+  --pink-rose: #e91e63;
+  --white-soft: #fff5f7;
+  --white-frost: rgba(255,255,255,0.85);
+  --text-dark: #5d3a4a;
+  --text-mid: #8d6e7a;
+  --shadow-soft: 0 8px 32px rgba(180,120,140,0.15);
+  --shadow-glow: 0 0 60px rgba(255,182,193,0.4);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Serif SC', 'Ma Shan Zheng', serif;
+  cursor: none;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(ellipse at 50% 40%, #fce4ec 0%, #f8bbd0 40%, #f48fb1 80%, #ec8fa8 100%);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.12'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 512px 512px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 50%, transparent 25%, rgba(233,30,99,0.06) 60%, rgba(180,90,120,0.14) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#bg-texture {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.04' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23fff5f7' surfaceScale='1.5' result='light'%3E%3CfeDistantLight azimuth='45' elevation='60'/%3E%3C/feDiffuseLighting%3E%3CfeBlend in='SourceGraphic' in2='light' mode='multiply'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%23fff0f3' filter='url(%23paper)' opacity='0.35'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  opacity: 0.6;
+}
+
+#bg-frost {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  backdrop-filter: blur(0.5px) saturate(0.92);
+  -webkit-backdrop-filter: blur(0.5px) saturate(0.92);
+  background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.15) 0%, rgba(255,245,247,0.08) 50%, transparent 80%);
+}
+
+#bg-heart {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+  font-size: 70vh;
+  color: rgba(255,255,255,0.08);
+  filter: blur(2px) drop-shadow(0 0 80px rgba(255,255,255,0.3));
+  animation: bgHeartPulse 4s ease-in-out infinite;
+  line-height: 1;
+}
+
+@keyframes bgHeartPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.06; }
+  50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.12; }
+}
+
+#bg-text-layer {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-text {
+  position: absolute;
+  font-family: 'Ma Shan Zheng', cursive;
+  color: rgba(255,255,255,0.12);
+  font-size: 18px;
+  white-space: nowrap;
+  animation: floatText 20s linear infinite;
+}
+
+@keyframes floatText {
+  0% { transform: translateY(0px) rotate(var(--rot)); opacity: 0.08; }
+  25% { opacity: 0.14; }
+  50% { transform: translateY(-30px) rotate(var(--rot)); opacity: 0.12; }
+  75% { opacity: 0.10; }
+  100% { transform: translateY(0px) rotate(var(--rot)); opacity: 0.08; }
+}
+
+#custom-cursor {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  font-size: 24px;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 6px rgba(255,150,180,0.6));
+  transition: transform 0.05s ease-out;
+}
+
+#trail-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+#cover {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+#cover.hidden {
+  opacity: 0;
+  transform: scale(1.1);
+  pointer-events: none;
+}
+
+.cover-card {
+  background: var(--white-frost);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 60px 80px;
+  text-align: center;
+  box-shadow: var(--shadow-soft), 0 0 100px rgba(255,182,193,0.2);
+  border: 1px solid rgba(255,255,255,0.6);
+  position: relative;
+  animation: cardIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes cardIn {
+  0% { opacity: 0; transform: translateY(40px) scale(0.9); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.cover-heart {
+  font-size: 60px;
+  animation: heartPulse 1.5s ease-in-out infinite;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 20px rgba(255,100,130,0.5));
+}
+
+@keyframes heartPulse {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.15); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.12); }
+  60% { transform: scale(1); }
+}
+
+.cover-title {
+  font-family: 'Noto Serif SC', 'Ma Shan Zheng', serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: #c94b64;
+  letter-spacing: 6px;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 12px rgba(200,75,100,0.2);
+}
+
+.cover-subtitle {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 20px;
+  color: #b8768a;
+  margin-bottom: 40px;
+  letter-spacing: 3px;
+}
+
+.cover-btn {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 20px;
+  padding: 14px 48px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #f48fb1, #e91e63);
+  color: white;
+  cursor: none;
+  letter-spacing: 4px;
+  box-shadow: 0 6px 24px rgba(233,30,99,0.3);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0; height: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.cover-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.cover-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(233,30,99,0.4);
+}
+
+.floating-heart {
+  position: fixed;
+  pointer-events: none;
+  z-index: 5;
+  font-size: 20px;
+  animation: floatUp 6s ease-in-out infinite;
+  opacity: 0;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(100vh) rotate(0deg) scale(0.5); opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(-10vh) rotate(360deg) scale(1.2); opacity: 0; }
+}
+
+#main-page {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 8;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+#main-page.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.photo-viewer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  padding-top: 20px;
+  min-height: 0;
+}
+
+.photo-frame {
+  position: relative;
+  max-width: 65vw;
+  max-height: 52vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: var(--shadow-soft), 0 0 80px rgba(255,150,180,0.15);
+  border: 1px solid rgba(255,255,255,0.7);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.photo-frame.fade-out {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.photo-frame img,
+.photo-frame video {
+  max-width: 100%;
+  max-height: 46vh;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+.photo-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--white-frost);
+  border: 1px solid rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #c94b64;
+  cursor: none;
+  z-index: 2;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.photo-nav:hover {
+  background: #fce4ec;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.photo-nav.prev { left: -60px; }
+.photo-nav.next { right: -60px; }
+
+.photo-desc {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 28px;
+  color: #b8506a;
+  text-align: center;
+  margin-top: 18px;
+  min-height: 40px;
+  letter-spacing: 2px;
+  text-shadow: 0 1px 8px rgba(200,100,130,0.15);
+  transition: opacity 0.4s ease;
+}
+
+.photo-counter {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 13px;
+  color: #c0909e;
+  margin-top: 6px;
+  letter-spacing: 2px;
+}
+
+.timeline-section {
+  padding: 10px 40px 0;
+  position: relative;
+}
+
+.timeline-line {
+  position: relative;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(244,143,177,0.3), rgba(233,30,99,0.4), rgba(244,143,177,0.3));
+  border-radius: 2px;
+  margin: 0 20px;
+}
+
+.timeline-nodes {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin-top: -13px;
+  padding: 0 20px;
+}
+
+.timeline-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: none;
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.timeline-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #f8bbd0;
+  border: 3px solid rgba(255,255,255,0.8);
+  transition: all 0.4s ease;
+  box-shadow: 0 0 12px rgba(244,143,177,0.3);
+  position: relative;
+}
+
+.timeline-node.active .timeline-dot {
+  background: #e91e63;
+  border-color: #fff;
+  box-shadow: 0 0 24px rgba(233,30,99,0.5);
+  transform: scale(1.3);
+  animation: dotPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 24px rgba(233,30,99,0.5); }
+  50% { box-shadow: 0 0 36px rgba(233,30,99,0.8); }
+}
+
+.timeline-label {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 18px;
+  color: #a07082;
+  margin-top: 10px;
+  letter-spacing: 2px;
+  transition: all 0.4s ease;
+  white-space: nowrap;
+}
+
+.timeline-node.active .timeline-label {
+  color: #c94b64;
+  font-size: 21px;
+  text-shadow: 0 0 12px rgba(200,75,100,0.3);
+}
+
+.timeline-node:hover .timeline-dot {
+  transform: scale(1.2);
+  box-shadow: 0 0 20px rgba(233,30,99,0.4);
+}
+
+.music-player {
+  padding: 12px 40px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.love-text {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #d81b60;
+  letter-spacing: 6px;
+  text-shadow: 0 0 10px rgba(216,27,96,0.2);
+}
+
+.player-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--white-frost);
+  border: 1px solid rgba(255,255,255,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #d81b60;
+  cursor: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  flex-shrink: 0;
+}
+
+.player-btn:hover {
+  background: #fce4ec;
+  transform: scale(1.1);
+}
+
+.player-btn.playing {
+  background: #fce4ec;
+}
+
+.progress-container {
+  flex: 1;
+  position: relative;
+  height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 4px;
+  background: rgba(244,143,177,0.25);
+  border-radius: 2px;
+  position: relative;
+  overflow: visible;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f48fb1, #e91e63);
+  border-radius: 2px;
+  transition: width 0.3s linear;
+  position: relative;
+}
+
+.progress-marker {
+  position: absolute;
+  top: -12px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+.marker-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e91e63;
+  border: 2px solid #fff;
+  box-shadow: 0 0 8px rgba(233,30,99,0.4);
+}
+
+.marker-label {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 11px;
+  color: #d81b60;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+.progress-heart {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  z-index: 3;
+  filter: drop-shadow(0 0 4px rgba(233,30,99,0.4));
+}
+
+.time-display {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 12px;
+  color: #b8768a;
+  min-width: 36px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.back-btn {
+  position: fixed;
+  top: 24px;
+  left: 32px;
+  z-index: 20;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--white-frost);
+  border: 1px solid rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #c94b64;
+  cursor: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.back-btn.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.back-btn:hover {
+  background: #fce4ec;
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .cover-card { padding: 40px 30px; }
+  .cover-title { font-size: 32px; letter-spacing: 3px; }
+  .photo-frame { max-width: 88vw; max-height: 40vh; }
+  .photo-nav.prev { left: -12px; }
+  .photo-nav.next { right: -12px; }
+  .photo-nav { width: 34px; height: 34px; font-size: 16px; }
+  .timeline-nodes { overflow-x: auto; gap: 16px; padding: 0 8px; justify-content: flex-start; }
+  .timeline-label { font-size: 14px; }
+  .music-player { padding: 10px 16px 16px; gap: 10px; }
+  .love-text { font-size: 16px; letter-spacing: 3px; }
+}
+</style>
+</head>
+<body>
+
+<div id="bg-texture"></div>
+<div id="bg-frost"></div>
+<div id="bg-heart">&#9829;</div>
+<div id="bg-text-layer"></div>
+
+<canvas id="trail-canvas"></canvas>
+<div id="custom-cursor">💖</div>
+
+<div id="cover">
+  <div class="cover-card">
+    <div class="cover-heart">💕</div>
+    <h1 class="cover-title">珍珍爱上了阿翔</h1>
+    <p class="cover-subtitle">我们的爱情故事</p>
+    <button class="cover-btn" id="start-btn">开 始 回 忆</button>
+  </div>
+</div>
+
+<div id="main-page">
+  <button class="back-btn" id="back-btn" title="回到封面">←</button>
+  <div class="photo-viewer" id="photo-viewer">
+    <div class="photo-frame" id="photo-frame">
+      <img src="" alt="" id="photo-img">
+    </div>
+    <div class="photo-desc" id="photo-desc"></div>
+    <div class="photo-counter" id="photo-counter"></div>
+    <button class="photo-nav prev" id="prev-btn">‹</button>
+    <button class="photo-nav next" id="next-btn">›</button>
+  </div>
+
+  <div class="timeline-section">
+    <div class="timeline-line"></div>
+    <div class="timeline-nodes" id="timeline-nodes"></div>
+  </div>
+
+  <div class="music-player">
+    <span class="love-text">LOVE</span>
+    <button class="player-btn" id="player-btn">▶</button>
+    <div class="progress-container" id="progress-container">
+      <div class="progress-bar-bg" id="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-bar-fill" style="width:0%">
+          <span class="progress-heart" id="progress-heart">❤️</span>
+        </div>
+        <div class="progress-marker" style="left:19.7%" id="marker-520">
+          <span class="marker-dot"></span>
+          <span class="marker-label">5:20</span>
+        </div>
+        <div class="progress-marker" style="left:50.6%" id="marker-1314">
+          <span class="marker-dot"></span>
+          <span class="marker-label">13:14</span>
+        </div>
+      </div>
+    </div>
+    <span class="time-display" id="time-display">00:00</span>
+  </div>
+</div>
+
+<audio id="bgm" preload="auto" loop>
+  <source src="bgm.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+(function() {
+  var memories = [
+    {
+      folder: '1初识',
+      name: '初识',
+      items: [
+        { type: 'image', path: '1初识/第一次认识你是在手机里，看到这张照片，觉得你会不会很油腻.jpg', desc: '第一次认识你是在手机里，看到这张照片，觉得你会不会很油腻' },
+        { type: 'image', path: '1初识/疫情期间被隔离，你就天天%22骚扰%22我，陪我聊天.png', desc: '疫情期间被隔离，你就天天"骚扰"我，陪我聊天' },
+        { type: 'image', path: '1初识/我们第一次见面的地方.jpg', desc: '我们第一次见面的地方' },
+        { type: 'image', path: '1初识/第一次见面你给我买的衣服.jpg', desc: '第一次见面你给我买的衣服' }
+      ]
+    },
+    {
+      folder: '2表白',
+      name: '表白',
+      items: [
+        { type: 'image', path: '2表白/教堂求婚真的很浪漫.jpg', desc: '教堂求婚真的很浪漫' },
+        { type: 'video', path: '2表白/哇！第一次当面被表白.mp4', desc: '哇！第一次当面被表白' },
+        { type: 'image', path: '2表白/你送我的花还有你给我买的衣服.jpg', desc: '你送我的花还有你给我买的衣服' }
+      ]
+    },
+    {
+      folder: '3逗比',
+      name: '逗比',
+      items: [
+        { type: 'image', path: '3逗比/越来越熟悉之后，你开始不在意自己的形象.jpg', desc: '越来越熟悉之后，你开始不在意自己的形象' },
+        { type: 'image', path: '3逗比/偶尔还喜欢耍帅.jpg', desc: '偶尔还喜欢耍帅' },
+        { type: 'image', path: '3逗比/你甚至剪了光头.jpg', desc: '你甚至剪了光头' }
+      ]
+    },
+    {
+      folder: '4结婚',
+      name: '结婚',
+      items: [
+        { type: 'image', path: '4结婚/你向我求婚了.jpg', desc: '你向我求婚了' },
+        { type: 'image', path: '4结婚/订婚啦.jpg', desc: '订婚啦' },
+        { type: 'image', path: '4结婚/领证啦.jpg', desc: '领证啦' },
+        { type: 'image', path: '4结婚/一起拍婚纱照.jpg', desc: '一起拍婚纱照' },
+        { type: 'image', path: '4结婚/一起参加宋韵婚礼.jpg', desc: '一起参加宋韵婚礼' },
+        { type: 'image', path: '4结婚/我们的婚礼，谢谢你满足我的想法～.jpg', desc: '我们的婚礼，谢谢你满足我的想法～' },
+        { type: 'image', path: '4结婚/好喜欢这张照片，因为你衬托了我.jpg', desc: '好喜欢这张照片，因为你衬托了我' }
+      ]
+    },
+    {
+      folder: '5旅游',
+      name: '旅游',
+      items: [
+        { type: 'image', path: '5旅游/这是我们旅游的第一站——苏州.jpg', desc: '这是我们旅游的第一站——苏州' },
+        { type: 'image', path: '5旅游/我们去迪士尼啦.jpg', desc: '我们去迪士尼啦' },
+        { type: 'image', path: '5旅游/这里不知道在哪，反正是旅游.jpg', desc: '这里不知道在哪，反正是旅游' },
+        { type: 'image', path: '5旅游/我美吧哈哈哈.jpg', desc: '我美吧哈哈哈' },
+        { type: 'image', path: '5旅游/这张你很像小仓鼠.jpg', desc: '这张你很像小仓鼠' },
+        { type: 'image', path: '5旅游/哈哈哈.jpg', desc: '哈哈哈' }
+      ]
+    },
+    {
+      folder: '6甜蜜',
+      name: '甜蜜',
+      items: [
+        { type: 'image', path: '6甜蜜/当时没在一起我们经常视频陪伴.png', desc: '当时没在一起我们经常视频陪伴' },
+        { type: 'image', path: '6甜蜜/你那时候对我很贴心.jpg', desc: '你那时候对我很贴心' },
+        { type: 'image', path: '6甜蜜/你喜欢吃我烧的饭.jpg', desc: '你喜欢吃我烧的饭' },
+        { type: 'image', path: '6甜蜜/你经常带我去你的学校.jpg', desc: '你经常带我去你的学校' },
+        { type: 'image', path: '6甜蜜/喜欢坐你的车.jpg', desc: '喜欢坐你的车' },
+        { type: 'image', path: '6甜蜜/平时你会带我出去玩，不过你还是经常爱打游戏.jpg', desc: '平时你会带我出去玩，不过你还是经常爱打游戏' },
+        { type: 'image', path: '6甜蜜/我们一起吃了很多饭.jpg', desc: '我们一起吃了很多饭' },
+        { type: 'image', path: '6甜蜜/我们一起租房子.jpg', desc: '我们一起租房子' }
+      ]
+    },
+    {
+      folder: '7敬拜',
+      name: '敬拜',
+      items: [
+        { type: 'image', path: '7敬拜/你总是沉浸在诗歌中（很帅气）.jpg', desc: '你总是沉浸在诗歌中（很帅气）' },
+        { type: 'image', path: '7敬拜/后来我们一起献唱.jpg', desc: '后来我们一起献唱' }
+      ]
+    },
+    {
+      folder: '8怀孕',
+      name: '怀孕',
+      items: [
+        { type: 'image', path: '8怀孕/或许我们应该想想要个宝宝了.jpg', desc: '或许我们应该想想要个宝宝了' },
+        { type: 'image', path: '8怀孕/我们的恩恩也来到了我们的生命中.jpg', desc: '我们的恩恩也来到了我们的生命中' }
+      ]
+    },
+    {
+      folder: '9帅照',
+      name: '帅照',
+      items: [
+        { type: 'image', path: '9帅照/这是我觉得你最帅的时候.jpg', desc: '这是我觉得你最帅的时候' },
+        { type: 'image', path: '9帅照/心里的你.png', desc: '心里的你' }
+      ]
+    }
+  ];
+
+  var currentMemoryIndex = 0;
+  var currentPhotoIndex = 0;
+  var slideshowTimer = null;
+  var isTransitioning = false;
+
+  var bgm = document.getElementById('bgm');
+  var cover = document.getElementById('cover');
+  var mainPage = document.getElementById('main-page');
+  var startBtn = document.getElementById('start-btn');
+  var backBtn = document.getElementById('back-btn');
+  var photoFrame = document.getElementById('photo-frame');
+  var photoImg = document.getElementById('photo-img');
+  var photoDesc = document.getElementById('photo-desc');
+  var photoCounter = document.getElementById('photo-counter');
+  var prevBtn = document.getElementById('prev-btn');
+  var nextBtn = document.getElementById('next-btn');
+  var timelineNodes = document.getElementById('timeline-nodes');
+  var playerBtn = document.getElementById('player-btn');
+  var progressFill = document.getElementById('progress-bar-fill');
+  var progressHeart = document.getElementById('progress-heart');
+  var timeDisplay = document.getElementById('time-display');
+
+  function buildTimeline() {
+    timelineNodes.innerHTML = '';
+    memories.forEach(function(mem, idx) {
+      var node = document.createElement('div');
+      node.className = 'timeline-node';
+      node.setAttribute('data-index', idx);
+      node.innerHTML = '<div class="timeline-dot"></div><span class="timeline-label">' + mem.name + '</span>';
+      node.addEventListener('click', function() { switchMemory(idx); });
+      timelineNodes.appendChild(node);
+    });
+  }
+
+  function switchMemory(idx) {
+    if (idx === currentMemoryIndex) return;
+    currentMemoryIndex = idx;
+    currentPhotoIndex = 0;
+    stopSlideshow();
+    updateTimelineActive();
+    showCurrentPhoto();
+  }
+
+  function updateTimelineActive() {
+    var nodes = timelineNodes.querySelectorAll('.timeline-node');
+    nodes.forEach(function(n, i) {
+      if (i === currentMemoryIndex) {
+        n.classList.add('active');
+      } else {
+        n.classList.remove('active');
+      }
+    });
+  }
+
+  function stopSlideshow() {
+    if (slideshowTimer) {
+      clearInterval(slideshowTimer);
+      slideshowTimer = null;
+    }
+  }
+
+  function startSlideshow() {
+    stopSlideshow();
+    slideshowTimer = setInterval(function() {
+      nextPhoto();
+    }, 4000);
+  }
+
+  function nextPhoto() {
+    if (isTransitioning) return;
+    var mem = memories[currentMemoryIndex];
+    currentPhotoIndex = (currentPhotoIndex + 1) % mem.items.length;
+    showCurrentPhoto();
+  }
+
+  function prevPhoto() {
+    if (isTransitioning) return;
+    var mem = memories[currentMemoryIndex];
+    currentPhotoIndex = (currentPhotoIndex - 1 + mem.items.length) % mem.items.length;
+    showCurrentPhoto();
+  }
+
+  function showCurrentPhoto() {
+    if (isTransitioning) return;
+    var mem = memories[currentMemoryIndex];
+    var item = mem.items[currentPhotoIndex];
+    isTransitioning = true;
+
+    photoFrame.classList.add('fade-out');
+    photoDesc.style.opacity = '0';
+    photoDesc.textContent = '';
+
+    setTimeout(function() {
+      photoFrame.innerHTML = '';
+
+      if (item.type === 'video') {
+        var video = document.createElement('video');
+        video.src = item.path;
+        video.controls = true;
+        video.playsInline = true;
+        video.style.maxWidth = '100%';
+        video.style.maxHeight = '46vh';
+        video.style.borderRadius = '12px';
+        video.style.objectFit = 'contain';
+        photoFrame.appendChild(video);
+      } else {
+        var img = document.createElement('img');
+        img.src = item.path;
+        img.alt = item.desc;
+        img.onerror = function() {
+          img.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect fill="#fce4ec" width="400" height="300"/><text x="200" y="150" text-anchor="middle" fill="#c94b64" font-size="18" font-family="sans-serif">照片加载中...</text></svg>');
+        };
+        photoFrame.appendChild(img);
+      }
+
+      photoDesc.textContent = item.desc;
+      photoCounter.textContent = (currentPhotoIndex + 1) + ' / ' + mem.items.length;
+
+      photoFrame.classList.remove('fade-out');
+      requestAnimationFrame(function() {
+        photoDesc.style.opacity = '1';
+      });
+      isTransitioning = false;
+
+      stopSlideshow();
+      startSlideshow();
+    }, 400);
+  }
+
+  function toggleMusic() {
+    if (bgm.paused) {
+      bgm.play().then(function() {
+        playerBtn.textContent = '⏸';
+        playerBtn.classList.add('playing');
+      }).catch(function() {});
+    } else {
+      bgm.pause();
+      playerBtn.textContent = '▶';
+      playerBtn.classList.remove('playing');
+    }
+  }
+
+  function updateProgress() {
+    if (!bgm.duration || isNaN(bgm.duration)) return;
+    var pct = (bgm.currentTime / bgm.duration) * 100;
+    progressFill.style.width = pct + '%';
+    progressHeart.style.left = pct + '%';
+    var mins = Math.floor(bgm.currentTime / 60);
+    var secs = Math.floor(bgm.currentTime % 60);
+    timeDisplay.textContent = (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs;
+  }
+
+  bgm.addEventListener('timeupdate', updateProgress);
+  bgm.addEventListener('loadedmetadata', updateProgress);
+
+  playerBtn.addEventListener('click', toggleMusic);
+
+  prevBtn.addEventListener('click', function() {
+    stopSlideshow();
+    prevPhoto();
+  });
+
+  nextBtn.addEventListener('click', function() {
+    stopSlideshow();
+    nextPhoto();
+  });
+
+  startBtn.addEventListener('click', function() {
+    cover.classList.add('hidden');
+    setTimeout(function() {
+      mainPage.classList.add('visible');
+      backBtn.classList.add('visible');
+      currentMemoryIndex = 0;
+      currentPhotoIndex = 0;
+      updateTimelineActive();
+      showCurrentPhoto();
+
+      bgm.play().then(function() {
+        playerBtn.textContent = '⏸';
+        playerBtn.classList.add('playing');
+      }).catch(function() {});
+    }, 400);
+  });
+
+  backBtn.addEventListener('click', function() {
+    stopSlideshow();
+    mainPage.classList.remove('visible');
+    backBtn.classList.remove('visible');
+    setTimeout(function() {
+      cover.classList.remove('hidden');
+    }, 300);
+    bgm.pause();
+    playerBtn.textContent = '▶';
+    playerBtn.classList.remove('playing');
+  });
+
+  buildTimeline();
+
+  var bgLayer = document.getElementById('bg-text-layer');
+  var bgTexts = [];
+  var cols = 8;
+  var rows = 6;
+  var cellW = 100 / cols;
+  var cellH = 100 / rows;
+
+  for (var r = 0; r < rows; r++) {
+    for (var c = 0; c < cols; c++) {
+      var span = document.createElement('span');
+      span.className = 'bg-text';
+      span.textContent = '珍珍爱阿翔❤️';
+      span.style.left = (c * cellW + Math.random() * cellW * 0.6) + '%';
+      span.style.top = (r * cellH + Math.random() * cellH * 0.6) + '%';
+      span.style.setProperty('--rot', (Math.random() - 0.5) * 20 + 'deg');
+      span.style.animationDelay = Math.random() * 20 + 's';
+      span.style.animationDuration = (15 + Math.random() * 15) + 's';
+      span.style.fontSize = (16 + Math.random() * 8) + 'px';
+      bgLayer.appendChild(span);
+      bgTexts.push(span);
+    }
+  }
+
+  var canvas = document.getElementById('trail-canvas');
+  var ctx = canvas.getContext('2d');
+  var cursorEl = document.getElementById('custom-cursor');
+  var mouseX = -100, mouseY = -100;
+  var particles = [];
+  var maxParticles = 30;
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursorEl.style.left = mouseX + 'px';
+    cursorEl.style.top = mouseY + 'px';
+
+    if (Math.random() < 0.5) {
+      particles.push({
+        x: mouseX,
+        y: mouseY,
+        vx: (Math.random() - 0.5) * 2,
+        vy: -Math.random() * 3 - 1,
+        life: 1,
+        size: 6 + Math.random() * 8,
+        rotation: Math.random() * Math.PI * 2,
+        rotSpeed: (Math.random() - 0.5) * 0.1
+      });
+    }
+  });
+
+  function drawHeart(ctx, x, y, size, alpha, rotation) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.translate(x, y);
+    ctx.rotate(rotation);
+    ctx.fillStyle = '#f48fb1';
+    ctx.beginPath();
+    var s = size * 0.5;
+    ctx.moveTo(0, s * 0.3);
+    ctx.bezierCurveTo(-s * 0.5, -s * 0.3, -s, s * 0.2, 0, s);
+    ctx.bezierCurveTo(s, s * 0.2, s * 0.5, -s * 0.3, 0, s * 0.3);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (var i = particles.length - 1; i >= 0; i--) {
+      var p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life -= 0.015;
+      p.rotation += p.rotSpeed;
+      p.vx *= 0.98;
+      p.vy += 0.02;
+
+      if (p.life <= 0) {
+        particles.splice(i, 1);
+        continue;
+      }
+
+      drawHeart(ctx, p.x, p.y, p.size * p.life, p.life * 0.7, p.rotation);
+    }
+
+    if (particles.length > maxParticles) {
+      particles.splice(0, particles.length - maxParticles);
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  function createFloatingHearts() {
+    var container = document.body;
+    for (var i = 0; i < 15; i++) {
+      var heart = document.createElement('span');
+      heart.className = 'floating-heart';
+      heart.textContent = ['❤️','💕','💖','💗','💝'][Math.floor(Math.random() * 5)];
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.animationDelay = Math.random() * 12 + 's';
+      heart.style.animationDuration = (5 + Math.random() * 8) + 's';
+      heart.style.fontSize = (14 + Math.random() * 18) + 'px';
+      container.appendChild(heart);
+    }
+  }
+  createFloatingHearts();
+
+  document.addEventListener('keydown', function(e) {
+    if (!mainPage.classList.contains('visible')) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      stopSlideshow();
+      nextPhoto();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      stopSlideshow();
+      prevPhoto();
+    } else if (e.key === ' ') {
+      e.preventDefault();
+      toggleMusic();
+    }
+  });
+
+  var progressBarBg = document.getElementById('progress-bar-bg');
+  progressBarBg.addEventListener('click', function(e) {
+    if (!bgm.duration || isNaN(bgm.duration)) return;
+    var rect = progressBarBg.getBoundingClientRect();
+    var pct = (e.clientX - rect.left) / rect.width;
+    bgm.currentTime = pct * bgm.duration;
+    updateProgress();
+  });
+
+})();
+</script>
+</body>
+</html>
